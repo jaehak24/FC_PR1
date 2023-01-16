@@ -1,0 +1,58 @@
+debug: false #debug 옵션 설정 시 너무 많으면 디버깅 발생 시 다 보기 어려워
+            # 특정 옵션만 넣는다.
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: "*" #엑튜에이터 단계를 보기 가능
+
+logging:
+  level:
+    com.example.fc_project_pr1: debug #위에서 거절해놔서 우리가 보고 싶은 부분을 활성화하기
+    org.springframework.web.servlet: debug #위에서 거절해놔서 우리가 보고 싶은 부분을 활성화하기
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/board
+    username: uno
+    password: lee0422!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    defer-datasource-initialization: true #테스트용 데이터베이스를 위해서 데이터베이스 분리
+          # resource폴더에 data.sql 확인
+    hibernate:
+      ddl-auto: create # 자동으로 ddl 옵션을 만들어줌
+    open-in-view: true
+    show-sql: true #sql 문을 디버그엑서 확인 가능
+    properties:
+      hibernate: #진행하고자 하는 객체에 특정 hibernate 프로젝트 특성을 가져오려고 한다면
+                  # 다음 옵션을 사용
+        format_sql: true
+        default_batch_fetch_size: 100 # 100개의 쿼리를 한번으로 묶는 방법
+  h2: # h2 web console 활성화 # 인메모리 베이스 데이터 베이스
+    console:
+      enabled: true
+
+  sql:
+    init:
+      mode: always #data.sql 언제 작동시킬지를 작동시킬지를 //
+                    # always, never, embedded 3 종류가 있음
+                    # embedded는 테스트 환경에서만
+
+
+---
+
+# 테스트 DB 용
+spring:
+  activate.on-profile: testdb
+  datasource:
+    url: jdbc:h2:mem:board;mode=mysql
+    driver-class-name: org.h2.Driver
+  sql.init.mode: always
+  test:
+    database:
+
+      replace: none
+
+
