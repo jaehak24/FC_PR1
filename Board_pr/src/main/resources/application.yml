@@ -1,0 +1,24 @@
+debug: false
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: "*"
+
+logging:
+  level:
+    com.example.board_pr: debug #?? ??? ???? ??? ??? ??? ??? ??
+    org.springframework.web.servlet: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace # JPA ?? ??? ? ?? ??? ?? ??
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306
+    username: jaehak24
+    password: lee0422!
+  jpa:
+    show-sql: true
+
+
+
